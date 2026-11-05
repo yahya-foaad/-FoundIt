@@ -80,21 +80,9 @@ export default function ReportFormPage() {
         onSubmit={handleSubmit}
         className="flex flex-col gap-5 rounded-2xl bg-white p-6 shadow-lg"
       >
-        <h1 className="text-2xl font-bold text-slate-900">سجل بلاغ جديد</h1>
+        <h1 className="text-2xl font-bold text-slate-900"> بلاغ جديد 🔍 </h1>
 
-        <Field label="نوع البلاغ إيه؟">
-          <select
-            name="type"
-            value={reportData.type}
-            onChange={handleChange}
-            className={fieldClass}
-          >
-            <option value="lost">حاجة ضاعت مني (مفقود)</option>
-            <option value="found">لقيت حاجة وعايز أرجعها (لقيت)</option>
-          </select>
-        </Field>
-
-        <Field label="اسم الحاجة اللي ضاعت أو لقيتها">
+        <Field label="اسم الحاجة اللي لقيتها">
           <input
             name="title"
             value={reportData.title}
@@ -105,7 +93,7 @@ export default function ReportFormPage() {
           />
         </Field>
 
-        <Field label="تفاصيل ووصف الحاجة">
+        <Field label="تفاصيل ووصف الحاجة 📝 ">
           <textarea
             name="description"
             value={reportData.description}
@@ -116,7 +104,7 @@ export default function ReportFormPage() {
           />
         </Field>
 
-        <Field label="آخر مكان شفتها فيه">
+        <Field label="لقيتها فين ؟؟ 📍">
           <div className="grid grid-cols-2 gap-2">
             <input
               name="location"
@@ -132,7 +120,7 @@ export default function ReportFormPage() {
           </div>
         </Field>
 
-        <Field label="حصلت امتى؟ (التاريخ والوقت)">
+        <Field label=" لقيتها امتى؟ (التاريخ والوقت) 📅">
           <div className="grid grid-cols-2 gap-2">
             <input
               type="date"
@@ -154,11 +142,9 @@ export default function ReportFormPage() {
           </div>
         </Field>
 
-        {/* تم تعديل gap.1.5 إلى gap-1.5 صحيحة هنا */}
+        {}
         <div className="flex flex-col gap-1.5">
-          <p className="text-sm font-semibold text-slate-800">
-            صورة للحاجة (لو متوفرة)
-          </p>
+          <p className="text-sm font-semibold text-slate-800">صورة للحاجة 📸</p>
           <label className="relative flex h-40 cursor-pointer flex-col items-center justify-center gap-2 overflow-hidden rounded-xl border-2 border-dashed border-sky-300 bg-sky-50 text-sm text-slate-600 hover:bg-sky-100/50 transition">
             {preview ? (
               <div className="relative h-full w-full">
@@ -190,16 +176,6 @@ export default function ReportFormPage() {
             />
           </label>
         </div>
-
-        <Field label="نتواصل معاك إزاي؟" optional>
-          <input
-            name="contact"
-            value={reportData.contact}
-            onChange={handleChange}
-            placeholder="رقم الموبايل أو الإيميل"
-            className={fieldClass}
-          />
-        </Field>
 
         <div className="mt-2 flex justify-end gap-3">
           <button
