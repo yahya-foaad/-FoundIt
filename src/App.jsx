@@ -1,9 +1,3 @@
-import { Route, Routes } from "react-router-dom";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import HomePage from "@/pages/home/HomePage";
-import LoginPage from "@/pages/auth/LoginPage";
-import SignupPage from "@/pages/auth/SignupPage";
 import NotFoundPage from "@/pages/static/NotFoundPage";
 import ItemsPage from "@/pages/items/ItemsPage";
 import ItemDetailsPage from "@/pages/items/ItemDetailsPage";
@@ -12,6 +6,15 @@ import EditFormPage from "@/pages/report/EditFormPage";
 import ProfilePage from "@/pages/profile/ProfilePage";
 import MyReportsPage from "@/pages/profile/MyReportsPage";
 import SettingsPage from "@/pages/profile/SettingsPage";
+import { Routes } from "react-router-dom";
+import { Route } from "react-router-dom";
+
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import HomePage from "./pages/home/HomePage";
+import LoginPage from "./pages/login/LoginPage";
+import SignupPage from "./pages/login/SignupPage";
+import Forgetpassword from "./pages/login/Forgetpassword";
 
 export default function App() {
   return (
@@ -20,9 +23,9 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="signup" element={<SignupPage />} />
-
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/forgetpassword" element={<Forgetpassword />} />
           <Route path="items">
             <Route index element={<ItemsPage />} />
             <Route path=":id" element={<ItemDetailsPage />} />
