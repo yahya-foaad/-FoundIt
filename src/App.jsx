@@ -1,10 +1,11 @@
 import { Route, Routes } from "react-router-dom";
-import Header from "./components/layout/Header";
-import Footer from "./components/layout/Footer";
+import Header from "./layout/Header";
+import Footer from "./layout/Footer";
 import HomePage from "./pages/home/HomePage";
 import LoginPage from "./pages/auth/LoginPage";
 import SignupPage from "./pages/auth/SignupPage";
 import NotFoundPage from "./pages/static/NotFoundPage";
+import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
 import ItemsPage from "./pages/items/ItemsPage";
 import ItemDetailsPage from "./pages/items/ItemDetailsPage";
 import ReportFormPage from "./pages/report/ReportFormPage";
@@ -32,6 +33,8 @@ export default function App() {
             <Route index element={<ReportFormPage />} />
             <Route path="edit/:id" element={<EditFormPage />} />
           </Route>
+
+          <Route path="admin" element={<AdminDashboardPage />} />
 
           <Route path="profile">
             <Route index element={<ProfilePage />} />
