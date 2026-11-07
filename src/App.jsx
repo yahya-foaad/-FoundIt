@@ -13,6 +13,7 @@ import EditFormPage from "./pages/profile/EditFormPage";
 import ProfilePage from "./pages/profile/ProfilePage";
 import MyReportsPage from "./pages/profile/MyReportsPage";
 import SettingsPage from "./pages/profile/SettingsPage";
+import Forgetpassword from "./pages/auth/Forgetpassword";
 
 export default function App() {
   return (
@@ -21,22 +22,23 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="signup" element={<SignupPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/forgetpassword" element={<Forgetpassword />} />
 
-          <Route path="items">
+          <Route path="/items">
             <Route index element={<ItemsPage />} />
             <Route path=":id" element={<ItemDetailsPage />} />
           </Route>
 
-          <Route path="report">
+          <Route path="/report">
             <Route index element={<ReportFormPage />} />
             <Route path="edit/:id" element={<EditFormPage />} />
           </Route>
 
-          <Route path="admin" element={<AdminDashboardPage />} />
+          <Route path="/admin" element={<AdminDashboardPage />} />
 
-          <Route path="profile">
+          <Route path="/profile">
             <Route index element={<ProfilePage />} />
             <Route path="my-reports" element={<MyReportsPage />} />
             <Route path="settings" element={<SettingsPage />} />
