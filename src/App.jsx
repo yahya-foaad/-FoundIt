@@ -5,7 +5,9 @@ import HomePage from "./pages/home/HomePage";
 import LoginPage from "./pages/auth/LoginPage";
 import SignupPage from "./pages/auth/SignupPage";
 import NotFoundPage from "./pages/static/NotFoundPage";
+import AdminLayout from "./layout/AdminLayout";
 import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
+import AdminRequestsPage from "./pages/admin/AdminRequestsPage";
 import ItemsPage from "./pages/items/ItemsPage";
 import ItemDetailsPage from "./pages/items/ItemDetailsPage";
 import ReportFormPage from "./pages/report/ReportFormPage";
@@ -17,37 +19,51 @@ import Forgetpassword from "./pages/auth/Forgetpassword";
 
 export default function App() {
   return (
-    <>
-      <Header />
-      <main>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/forgetpassword" element={<Forgetpassword />} />
+    <Routes>
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<AdminDashboardPage />} />
+      </Route>
 
-          <Route path="/items">
-            <Route index element={<ItemsPage />} />
-            <Route path=":id" element={<ItemDetailsPage />} />
-          </Route>
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<AdminDashboardPage />} />
+        <Route path="requests" element={<AdminRequestsPage />} />
+      </Route>
 
-          <Route path="/report">
-            <Route index element={<ReportFormPage />} />
-            <Route path="edit/:id" element={<EditFormPage />} />
-          </Route>
+      <Route
+        path="*"
+        element={
+          <>
+            <Header />
+            <main>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/signup" element={<SignupPage />} />
+                <Route path="/forgetpassword" element={<Forgetpassword />} />
 
-          <Route path="/admin" element={<AdminDashboardPage />} />
+                <Route path="/items">
+                  <Route index element={<ItemsPage />} />
+                  <Route path=":id" element={<ItemDetailsPage />} />
+                </Route>
 
-          <Route path="/profile">
-            <Route index element={<ProfilePage />} />
-            <Route path="my-reports" element={<MyReportsPage />} />
-            <Route path="settings" element={<SettingsPage />} />
-          </Route>
+                <Route path="/report">
+                  <Route index element={<ReportFormPage />} />
+                  <Route path="edit/:id" element={<EditFormPage />} />
+                </Route>
 
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </main>
-      <Footer />
-    </>
+                <Route path="/profile">
+                  <Route index element={<ProfilePage />} />
+                  <Route path="my-reports" element={<MyReportsPage />} />
+                  <Route path="settings" element={<SettingsPage />} />
+                </Route>
+
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </main>
+            <Footer />
+          </>
+        }
+      />
+    </Routes>
   );
 }
