@@ -5,7 +5,7 @@ export default function AdminDashboardPage() {
     <div dir="rtl" className="max-w-6xl mx-auto px-4 py-6">
       {/* dashboard content: stats, summary cards, ... */}
 
-      <Outlet />
+      
     </div>
   );
 }
