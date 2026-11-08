@@ -1,12 +1,11 @@
-import React from "react";
+import { Outlet } from "react-router-dom";
 
 export default function AdminDashboardPage() {
   return (
-    <div className="p-8" dir="rtl">
-      <h1 className="text-3xl font-bold text-gray-800 mb-4">
-        لوحة تحكم الأدمن
-      </h1>
-      <p className="text-gray-600">لوحة إدارة FOUNDIT.</p>
+    <div dir="rtl" className="max-w-6xl mx-auto px-4 py-6">
+      {/* dashboard content: stats, summary cards, ... */}
+
+      <Outlet />
     </div>
   );
 }
