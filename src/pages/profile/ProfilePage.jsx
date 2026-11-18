@@ -48,9 +48,6 @@ const ProfilePage = () => {
             </div>
 
             {/* Stats strip */}
-            
-
-           
           </Card.Content>
         </Card>
       </div>
