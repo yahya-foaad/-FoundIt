@@ -1,15 +1,15 @@
-import { Outlet } from "react-router-dom";
-import AdminHeader from "./AdminHeader";
-import AdminFooter from "./AdminFooter";
+// import { Outlet } from "react-router-dom";
+// import AdminHeader from "./adminpanal/AdminHeader";
+// import AdminFooter from "./adminpanal/AdminFooter";
 
-export default function AdminLayout() {
-  return (
-    <>
-      <AdminHeader />
-      <main>
-        <Outlet />
-      </main>
-      <AdminFooter />
-    </>
-  );
-}
+// export default function AdminLayout() {
+//   return (
+//     <>
+//       <AdminHeader />
+//       <main>
+//         <Outlet />
+//       </main>
+//       <AdminFooter />
+//     </>
+//   );
+// }
