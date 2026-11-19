@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
-import PublicSite from "./layout/user/PublicSite";
 import AdminSite from "./layout/adminpanal/AdminSite";
+import PublicSite from "./layout/user/PublicSite";
 
 export default function App() {
   return (
