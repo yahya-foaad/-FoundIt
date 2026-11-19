@@ -1,4 +1,87 @@
 export default function ReportFormPage() {
+  const [form, setForm] = useState({
+    itemName: "",
+    description: "",
+    location: "",
+    date: "",
+    time: "",
+  });
+  const [errors, setErrors] = useState({});
+  const [selectedImages, setSelectedImages] = useState([]); // [{ file, url }]
+
+  // تنضيف روابط المعاينة لما الكومبوننت يتقفل
+  useEffect(() => {
+    return () => selectedImages.forEach((img) => URL.revokeObjectURL(img.url));
+    // eslint-disable-next-line
+  }, []);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: false }));
+  };
+
+  const handleImages = (e) => {
+    const files = Array.from(e.target.files);
+    const newImages = files.map((file) => ({
+      file,
+      url: URL.createObjectURL(file),
+    }));
+    setSelectedImages((prev) => [...prev, ...newImages]);
+    if (newImages.length > 0 && errors.images) {
+      setErrors((prev) => ({ ...prev, images: false }));
+    }
+    e.target.value = ""; // عشان تقدر تختار نفس الصورة تاني لو حذفتها
+  };
+
+  const removeImage = (index) => {
+    setSelectedImages((prev) => {
+      URL.revokeObjectURL(prev[index].url);
+      return prev.filter((_, i) => i !== index);
+    });
+  };
+
+  const validate = () => {
+    const newErrors = {};
+    if (!form.itemName.trim()) newErrors.itemName = true;
+    if (!form.description.trim()) newErrors.description = true;
+    if (!form.location.trim()) newErrors.location = true;
+    if (!form.date) newErrors.date = true;
+    if (!form.time) newErrors.time = true;
+    if (selectedImages.length === 0) newErrors.images = true;
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+    alert("تم إرسال البلاغ بنجاح!");
+  };
+
+  const handleCancel = () => {
+    selectedImages.forEach((img) => URL.revokeObjectURL(img.url));
+    setForm({
+      itemName: "",
+      description: "",
+      location: "",
+      date: "",
+      time: "",
+    });
+    setSelectedImages([]);
+    setErrors({});
+  };
+
+  const inputClass = (name, extra = "") =>
+    `w-full px-4 py-3 rounded-xl border text-sm focus:outline-none focus:ring-2 ${extra} ${
+      errors[name]
+        ? "border-red-500 bg-red-50 focus:ring-red-200"
+        : "border-gray-200 focus:ring-gray-300"
+    }`;
+
+  const ErrorMsg = ({ name, text }) =>
+    errors[name] ? <p className="text-red-500 text-xs mt-1">{text}</p> : null;
+
   return (
     <div
       className="min-h-screen bg-base-200 py-10 px-4 sm:px-6 lg:px-8"
@@ -10,31 +93,38 @@ export default function ReportFormPage() {
           <h1 className="text-2xl font-bold text-base-content">بلاغ جديد</h1>
         </div>
 
-        <form className="space-y-6">
-          {/* 1. اسم الحاجة اللي لقيتها */}
+        <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+          {/* 1. الاسم */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-base-content/80">
               اسم الحاجة اللي لقيتها
             </label>
             <input
               type="text"
+              name="itemName"
+              value={form.itemName}
+              onChange={handleChange}
               placeholder="مثال: محفظة سوداء، مفاتيح عربية، موبايل..."
               className="input input-bordered w-full rounded-xl bg-base-100 text-sm focus:outline-none focus:border-primary"
             />
+            <ErrorMsg name="itemName" text="لازم تكتب اسم الحاجة" />
           </div>
 
-          {/* 2. تفاصيل ووصف الحاجة */}
+          {/* 2. الوصف */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-base-content/80">
               تفاصيل ووصف الحاجة 📝
             </label>
             <textarea
               rows="3"
+              name="description"
+              value={form.description}
+              onChange={handleChange}
               placeholder="اكتب أي علامة مميزة (لون، خدش، مكان محدد جوه...)"
               className="textarea textarea-bordered w-full rounded-xl bg-base-100 text-sm resize-none focus:outline-none focus:border-primary"></textarea>
           </div>
 
-          {/* 3. المكان (لقيتها فين ؟؟) */}
+          {/* 3. المكان */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-base-content/80">
               لقيتها فين ؟؟ 📍
@@ -48,7 +138,7 @@ export default function ReportFormPage() {
             </div>
           </div>
 
-          {/* 4. الوقت والتاريخ (لقيتها امتى؟) */}
+          {/* 4. التاريخ والوقت */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-base-content/80">
               لقيتها امتى؟ (التاريخ والوقت) 📅
@@ -65,7 +155,7 @@ export default function ReportFormPage() {
             </div>
           </div>
 
-          {/* 5. صورة للحاجة */}
+          {/* 5. الصور */}
           <div className="space-y-2">
             <label className="block text-sm font-medium text-base-content/80">
               صورة للحاجة 📷

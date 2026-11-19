@@ -57,8 +57,8 @@ export default function AdminHeader() {
             </svg>
           </button>
           <NavLink to="/admin" className="flex items-center gap-3">
-  <p className="font-bold text-white">لوحة الإدارة</p>
-</NavLink>
+            <p className="font-bold text-white">لوحة الإدارة</p>
+          </NavLink>
         </div>
 
         {/* Desktop links: dashboard on the right, users on the left */}
@@ -74,9 +74,10 @@ export default function AdminHeader() {
 
         {/* Left side in RTL: logout */}
         <div className="hidden items-center gap-4 md:flex">
-<Button className="border border-red-500 bg-transparent text-red-400 hover:bg-red-500 hover:text-white">
-  تسجيل الخروج
-</Button>        </div>
+          <Button className="border border-red-500 bg-transparent text-red-400 hover:bg-red-500 hover:text-white">
+            تسجيل الخروج
+          </Button>{" "}
+        </div>
       </header>
 
       {/* Mobile menu */}
@@ -89,21 +90,23 @@ export default function AdminHeader() {
                   to={link.to}
                   end={link.end}
                   onClick={() => setIsMenuOpen(false)}
-                 className={({ isActive }) =>
-  `block rounded-lg px-3 py-2 ${
-    isActive
-      ? "bg-slate-800 font-semibold text-sky-400"
-      : "text-slate-300 hover:bg-slate-800 hover:text-white"
-  }`
-}
+                  className={({ isActive }) =>
+                    `block rounded-lg px-3 py-2 ${
+                      isActive
+                        ? "bg-slate-800 font-semibold text-sky-400"
+                        : "text-slate-300 hover:bg-slate-800 hover:text-white"
+                    }`
+                  }
                 >
                   {link.label}
                 </NavLink>
               </li>
             ))}
-<li className="mt-4 flex flex-col gap-2 border-t border-slate-800 pt-4">              <Button className="w-full border border-red-500 bg-transparent text-red-400 hover:bg-red-500 hover:text-white">
-  تسجيل الخروج
-</Button>
+            <li className="mt-4 flex flex-col gap-2 border-t border-slate-800 pt-4">
+              {" "}
+              <Button className="w-full border border-red-500 bg-transparent text-red-400 hover:bg-red-500 hover:text-white">
+                تسجيل الخروج
+              </Button>
             </li>
           </ul>
         </div>

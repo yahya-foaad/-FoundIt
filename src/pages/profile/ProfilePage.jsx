@@ -1,4 +1,4 @@
-import { Route, Routes , Navigate } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { Card, Avatar } from "@heroui/react";
 import MyReportsPage from "./MyReportsPage";
 import SettingsPage from "./SettingsPage";
@@ -39,17 +39,19 @@ const ProfilePage = () => {
               </svg>
               <span dir="ltr">sara.ahmed@campus.edu</span>
             </div>
+
+            {/* Stats strip */}
           </Card.Content>
         </Card>
       </div>
 
       <div className="mt-6">
-  <Routes>
-    <Route index element={<Navigate to="MyReportPage" replace />} />
-    <Route path="MyReportPage" element={<MyReportsPage />} />
-    <Route path="settings" element={<SettingsPage />} />
-  </Routes>
-</div>
+        <Routes>
+          <Route index element={<Navigate to="MyReportPage" replace />} />
+          <Route path="MyReportPage" element={<MyReportsPage />} />
+          <Route path="settings" element={<SettingsPage />} />
+        </Routes>
+      </div>
     </>
   );
 };
