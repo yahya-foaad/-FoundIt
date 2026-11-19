@@ -4,9 +4,11 @@ import AdminSite from "./layout/adminpanal/AdminSite";
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/admin/*" element={<AdminSite />} />
-      <Route path="/*" element={<PublicSite />} />
-    </Routes>
+    <div className="min-h-screen bg-base-100 text-base-content">
+      <Routes>
+        <Route path="/admin/*" element={<AdminSite />} />
+        <Route path="/*" element={<PublicSite />} />
+      </Routes>
+    </div>
   );
 }
