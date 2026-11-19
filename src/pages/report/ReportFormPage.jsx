@@ -1,5 +1,3 @@
-import React, { useState, useEffect } from "react";
-
 export default function ReportFormPage() {
   const [form, setForm] = useState({
     itemName: "",
@@ -86,19 +84,19 @@ export default function ReportFormPage() {
 
   return (
     <div
-      className="min-h-screen bg-gray-50 py-10 px-4 sm:px-6 lg:px-8"
-      dir="rtl"
-    >
-      <div className="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-        <div className="flex items-center gap-3 mb-8 border-b pb-4">
+      className="min-h-screen bg-base-200 py-10 px-4 sm:px-6 lg:px-8"
+      dir="rtl">
+      <div className="max-w-2xl mx-auto bg-base-100 text-base-content p-8 rounded-2xl shadow-sm border border-base-300">
+        {/* Header - العنوان الرئيسي */}
+        <div className="flex items-center gap-3 mb-8 border-b border-base-300 pb-4">
           <span className="text-3xl">🔍</span>
-          <h1 className="text-2xl font-bold text-gray-800">بلاغ جديد</h1>
+          <h1 className="text-2xl font-bold text-base-content">بلاغ جديد</h1>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6" noValidate>
           {/* 1. الاسم */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-base-content/80">
               اسم الحاجة اللي لقيتها
             </label>
             <input
@@ -107,14 +105,14 @@ export default function ReportFormPage() {
               value={form.itemName}
               onChange={handleChange}
               placeholder="مثال: محفظة سوداء، مفاتيح عربية، موبايل..."
-              className={inputClass("itemName")}
+              className="input input-bordered w-full rounded-xl bg-base-100 text-sm focus:outline-none focus:border-primary"
             />
             <ErrorMsg name="itemName" text="لازم تكتب اسم الحاجة" />
           </div>
 
           {/* 2. الوصف */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-base-content/80">
               تفاصيل ووصف الحاجة 📝
             </label>
             <textarea
@@ -123,111 +121,63 @@ export default function ReportFormPage() {
               value={form.description}
               onChange={handleChange}
               placeholder="اكتب أي علامة مميزة (لون، خدش، مكان محدد جوه...)"
-              className={inputClass("description", "resize-none")}
-            ></textarea>
-            <ErrorMsg name="description" text="لازم تكتب وصف الحاجة" />
+              className="textarea textarea-bordered w-full rounded-xl bg-base-100 text-sm resize-none focus:outline-none focus:border-primary"></textarea>
           </div>
 
           {/* 3. المكان */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-base-content/80">
               لقيتها فين ؟؟ 📍
             </label>
-            <input
-              type="text"
-              name="location"
-              value={form.location}
-              onChange={handleChange}
-              placeholder="اكتب اسم المكان أو المنطقة"
-              className={inputClass("location")}
-            />
-            <ErrorMsg name="location" text="لازم تكتب المكان" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <input
+                type="text"
+                placeholder="اكتب اسم المكان أو المنطقة"
+                className="input input-bordered w-full rounded-xl bg-base-100 text-sm focus:outline-none focus:border-primary"
+              />
+            </div>
           </div>
 
           {/* 4. التاريخ والوقت */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-base-content/80">
               لقيتها امتى؟ (التاريخ والوقت) 📅
             </label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <input
-                  type="date"
-                  name="date"
-                  value={form.date}
-                  onChange={handleChange}
-                  className={inputClass("date", "text-gray-500")}
-                />
-                <ErrorMsg name="date" text="لازم تختار التاريخ" />
-              </div>
-              <div>
-                <input
-                  type="time"
-                  name="time"
-                  value={form.time}
-                  onChange={handleChange}
-                  className={inputClass("time", "text-gray-500")}
-                />
-                <ErrorMsg name="time" text="لازم تختار الوقت" />
-              </div>
+              <input
+                type="date"
+                className="input input-bordered w-full rounded-xl bg-base-100 text-sm text-base-content/70 focus:outline-none focus:border-primary"
+              />
+              <input
+                type="time"
+                className="input input-bordered w-full rounded-xl bg-base-100 text-sm text-base-content/70 focus:outline-none focus:border-primary"
+              />
             </div>
           </div>
 
           {/* 5. الصور */}
           <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
-              صور للحاجة 📷 (يمكنك اختيار أكثر من صورة)
+            <label className="block text-sm font-medium text-base-content/80">
+              صورة للحاجة 📷
             </label>
-            <input
-              type="file"
-              multiple
-              accept="image/*"
-              onChange={handleImages}
-              className={`${inputClass("images", "cursor-pointer")} ${
-                errors.images ? "" : "bg-gray-50/50"
-              }`}
-            />
-            <ErrorMsg name="images" text="لازم ترفع صورة واحدة على الأقل" />
-
-            {selectedImages.length > 0 && (
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-2">
-                {selectedImages.map((img, index) => (
-                  <div
-                    key={img.url}
-                    className="relative group rounded-xl overflow-hidden border border-gray-200 aspect-square"
-                  >
-                    <img
-                      src={img.url}
-                      alt={`صورة ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => removeImage(index)}
-                      className="absolute top-2 left-2 w-7 h-7 flex items-center justify-center bg-red-500 text-white rounded-full text-sm shadow hover:bg-red-600"
-                      aria-label="حذف الصورة"
-                    >
-                      ✕
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
+            <div className="border-2 border-dashed border-base-300 rounded-2xl p-6 text-center hover:border-primary transition-colors cursor-pointer bg-base-200/50">
+              <div className="text-3xl mb-2">📷</div>
+              <p className="text-sm text-base-content/70 font-medium">
+                اضغط هنا عشان ترفع صورة أو اسحبها
+              </p>
+            </div>
           </div>
 
-          {/* الأزرار */}
-          <div className="flex items-center gap-4 pt-4 border-t">
+          {/* 7. أزرار التحكم */}
+          <div className="flex items-center gap-4 pt-4 border-t border-base-300">
             <button
               type="submit"
-              className="px-6 py-3 bg-gray-900 text-white rounded-xl text-sm font-medium hover:bg-gray-800 transition-colors shadow-sm"
-            >
+              className="px-6 py-3 bg-primary text-primary-content rounded-xl text-sm font-medium hover:opacity-90 transition-opacity shadow-sm">
               تأكيد ونشر البلاغ
             </button>
             <button
               type="button"
-              onClick={handleCancel}
-              className="px-6 py-3 bg-gray-100 text-gray-600 rounded-xl text-sm font-medium hover:bg-gray-200 transition-colors"
-            >
+              className="px-6 py-3 bg-base-200 text-base-content/70 rounded-xl text-sm font-medium hover:bg-base-300 transition-colors">
               إلغاء
             </button>
           </div>

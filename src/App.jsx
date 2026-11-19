@@ -19,47 +19,11 @@ import Forgetpassword from "./pages/auth/Forgetpassword";
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<AdminDashboardPage />} />
-        <Route path="requests" element={<AdminRequestsPage />} />
-      </Route>
-
-      <Route
-        path="*"
-        element={
-          <>
-            <Header />
-            <main>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/signup" element={<SignupPage />} />
-                <Route path="/forgetpassword" element={<Forgetpassword />} />
-
-                <Route path="/items">
-                  <Route index element={<ItemsPage />} />
-                  <Route path=":id" element={<ItemDetailsPage />} />
-                </Route>
-
-                <Route path="/report">
-                  <Route index element={<ReportFormPage />} />
-                  <Route path="edit/:id" element={<EditFormPage />} />
-                </Route>
-
-                <Route path="/profile">
-                  <Route index element={<ProfilePage />} />
-                  <Route path="my-reports" element={<MyReportsPage />} />
-                  <Route path="settings" element={<SettingsPage />} />
-                </Route>
-
-                <Route path="*" element={<NotFoundPage />} />
-              </Routes>
-            </main>
-            <Footer />
-          </>
-        }
-      />
-    </Routes>
+    <div className="min-h-screen bg-base-100 text-base-content">
+      <Routes>
+        <Route path="/admin/*" element={<AdminSite />} />
+        <Route path="/*" element={<PublicSite />} />
+      </Routes>
+    </div>
   );
 }

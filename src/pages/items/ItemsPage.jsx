@@ -55,7 +55,7 @@ const items = [
 
 export default function ItemsPage() {
   return (
-    <div dir="rtl" className="min-h-screen bg-[#eef3fc] px-4 py-6">
+    <div dir="rtl" className="min-h-screen bg-base-200 px-4 py-6">
       <div className="mx-auto max-w-6xl space-y-5">
         {/* البانر */}
         <section className="relative overflow-hidden rounded-3xl bg-linear-to-l from-blue-100 via-white to-blue-50 shadow-sm">

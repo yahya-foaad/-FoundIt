@@ -1,3 +1,60 @@
 @import "tailwindcss";
 @plugin "daisyui";
 @import "@heroui/styles";
+@plugin "daisyui" {
+  themes:
+    light --default,
+    night;
+}
+
+/* Global Theme */
+:root {
+  --bg-color: #f5f7fb;
+  --sidebar-bg: #ffffff;
+  --card-bg: #ffffff;
+  --text-color: #172033;
+  --secondary-text: #64748b;
+  --border-color: #e2e8f0;
+}
+
+[data-theme="night"] {
+  --bg-color: #050b16;
+  --sidebar-bg: #081426;
+  --card-bg: #10213a;
+  --text-color: #f1f5f9;
+  --secondary-text: #9baec5;
+  --border-color: #1b304b;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Navbar */
+.main-header {
+  background: var(--sidebar-bg);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.theme-text {
+  color: var(--text-color);
+}
+
+.theme-muted {
+  color: var(--secondary-text);
+}
+
+.theme-card {
+  background: var(--card-bg);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.theme-hover:hover {
+  background: var(--bg-color);
+}
