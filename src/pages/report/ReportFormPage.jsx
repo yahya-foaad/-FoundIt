@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from "react";
+
 export default function ReportFormPage() {
   const inputClass =
     "w-full px-4 py-3 rounded-xl border border-base-content/20 bg-base-200 text-base-content text-sm placeholder:text-base-content/50 focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/30";
@@ -18,15 +20,22 @@ export default function ReportFormPage() {
             <label className={labelClass}>اسم الحاجة اللي لقيتها</label>
             <input
               type="text"
+              name="itemName"
+              value={form.itemName}
+              onChange={handleChange}
               placeholder="مثال: محفظة سوداء، مفاتيح عربية، موبايل..."
               className={inputClass}
             />
+            <ErrorMsg name="itemName" text="لازم تكتب اسم الحاجة" />
           </div>
 
           <div className="space-y-2">
             <label className={labelClass}>تفاصيل ووصف الحاجة 📝</label>
             <textarea
               rows="3"
+              name="description"
+              value={form.description}
+              onChange={handleChange}
               placeholder="اكتب أي علامة مميزة (لون، خدش، مكان محدد جوه...)"
               className={`${inputClass} resize-none`}></textarea>
           </div>
