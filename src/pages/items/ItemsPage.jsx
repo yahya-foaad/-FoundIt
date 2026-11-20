@@ -58,12 +58,12 @@ export default function ItemsPage() {
     <div dir="rtl" className="min-h-screen bg-base-200 px-4 py-6">
       <div className="mx-auto max-w-6xl space-y-5">
         {/* البانر */}
-        <section className="relative overflow-hidden rounded-3xl bg-linear-to-l from-blue-100 via-white to-blue-50 shadow-sm">
+        <section className="relative overflow-hidden rounded-3xl bg-linear-to-l from-primary/20 via-base-100 to-base-100 shadow-sm">
           <div className="relative z-10 p-6 md:p-10 md:max-w-lg">
-            <h1 className="text-2xl font-extrabold text-[#0b1f4b] md:text-4xl">
+            <h1 className="text-2xl font-extrabold text-base-content md:text-4xl">
               ضايع منك حاجة في الجامعة؟
             </h1>
-            <p className="mt-3 text-sm leading-7 text-slate-600 md:text-base">
+            <p className="mt-3 text-sm leading-7 text-base-content/70 md:text-base">
               هنا تقدر تشوف الحاجات اللي اتلاقت في الجامعة، وتعرف إذا كانت حاجتك
               من ضمنها، وتطالب بيها بسهولة.
             </p>
@@ -83,16 +83,16 @@ export default function ItemsPage() {
 
         {/* البحث */}
         <div className="relative">
-          <FiSearch className="absolute right-5 top-1/2 -translate-y-1/2 text-xl text-slate-700" />
+          <FiSearch className="absolute right-5 top-1/2 -translate-y-1/2 text-xl text-base-content/70" />
           <input
             type="text"
             placeholder="دوّر على غرض (مثلًا: شنطة، نضارة، موبايل...)"
-            className="w-full rounded-full border border-slate-200 bg-white py-4 pr-14 pl-4 text-sm shadow-sm outline-none focus:border-blue-500"
+            className="w-full rounded-full border border-base-300 bg-base-100 py-4 pr-14 pl-4 text-sm text-base-content shadow-sm outline-none placeholder:text-base-content/50 focus:border-primary  "
           />
         </div>
 
         {/* الترتيب */}
-        <button className="flex items-center gap-2 rounded-full bg-white px-5 py-2 text-sm font-bold text-[#0b1f4b] shadow-sm">
+        <button className="flex items-center gap-2 rounded-full border border-base-300 bg-base-100 px-5 py-2 text-sm font-bold text-base-content shadow-sm">
           <MdSort className="text-lg" />
           ترتيب: الأحدث
         </button>

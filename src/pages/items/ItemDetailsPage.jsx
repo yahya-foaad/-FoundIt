@@ -35,26 +35,26 @@ const details = [
 
 export default function ItemDetailsPage() {
   return (
-    <div dir="rtl" className="min-h-screen bg-[#eef3fc] px-4 py-6">
+    <div dir="rtl" className="min-h-screen bg-base-200 px-4 py-6">
       <div className="mx-auto max-w-6xl">
         {/* مسار التنقل */}
-        <nav className="flex items-center gap-2 text-sm text-slate-600">
-          <Link to="/" className="text-blue-600">
+        <nav className="flex items-center gap-2 text-sm text-base-content/70">
+          <Link to="/" className="text-primary">
             <FiHome className="text-lg" />
           </Link>
           <FiChevronLeft className="text-xs" />
-          <Link to="/items" className="hover:text-blue-600">
+          <Link to="/items" className="hover:text-primary">
             الأغراض المعثور عليها
           </Link>
           <FiChevronLeft className="text-xs" />
-          <span className="font-bold text-[#0b1f4b]">تفاصيل الغرض</span>
+          <span className="font-bold text-base-content">تفاصيل الغرض</span>
         </nav>
 
-        <h1 className="mt-3 mb-5 text-3xl font-extrabold text-[#0b1f4b]">
+        <h1 className="mt-3 mb-5 text-3xl font-extrabold text-base-content">
           تفاصيل الغرض
         </h1>
 
-        <div className="grid gap-6 rounded-3xl bg-white p-5 shadow-sm lg:grid-cols-2 lg:p-6">
+        <div className="grid gap-6 rounded-3xl border border-base-300 bg-base-100 p-5 shadow-sm lg:grid-cols-2 lg:p-6">
           {/* الصور (يمين) */}
           <div>
             <div className="relative overflow-hidden rounded-2xl">
@@ -63,10 +63,10 @@ export default function ItemDetailsPage() {
                 alt="سماعات لاسلكية"
                 className="h-72 w-full object-cover sm:h-96"
               />
-              <button className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow">
+              <button className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-base-100/90 text-base-content shadow">
                 <FiChevronLeft />
               </button>
-              <button className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 shadow">
+              <button className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-base-100/90 text-base-content shadow">
                 <FiChevronRight />
               </button>
             </div>
@@ -77,8 +77,8 @@ export default function ItemDetailsPage() {
                   key={i}
                   src={src}
                   alt=""
-                  className={`h-16 w-full rounded-xl object-cover border-2 ${
-                    i === 3 ? "border-blue-600" : "border-transparent"
+                  className={`h-16 w-full rounded-xl border-2 object-cover ${
+                    i === 3 ? "border-primary" : "border-transparent"
                   }`}
                 />
               ))}
@@ -91,7 +91,7 @@ export default function ItemDetailsPage() {
               <FiCheck /> معثور عليه
             </span>
 
-            <h2 className="mt-3 text-3xl font-extrabold text-[#0b1f4b]">
+            <h2 className="mt-3 text-3xl font-extrabold text-primary">
               سماعات لاسلكية
             </h2>
             <p className="mt-2 leading-8 text-slate-600">
@@ -103,8 +103,7 @@ export default function ItemDetailsPage() {
               {details.map((d) => (
                 <li
                   key={d.label}
-                  className="flex items-center justify-between gap-3 py-3 text-sm"
-                >
+                  className="flex items-center justify-between gap-3 py-3 text-sm">
                   <span className="flex items-center gap-2 font-bold text-[#0b1f4b]">
                     <span className="text-lg text-blue-600">{d.icon}</span>
                     {d.label}
@@ -127,8 +126,7 @@ export default function ItemDetailsPage() {
 
             <Link
               to="/items"
-              className="mt-4 flex items-center gap-2 text-sm font-bold text-blue-600 hover:underline"
-            >
+              className="mt-4 flex items-center gap-2 text-sm font-bold text-blue-600 hover:underline">
               <FiArrowRight />
               رجوع لصفحة الأغراض
             </Link>
