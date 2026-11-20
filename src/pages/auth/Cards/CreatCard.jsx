@@ -6,6 +6,7 @@ import { BiLogoGmail } from "react-icons/bi";
 import { MdOutlineLock, MdOutlinePhoneEnabled } from "react-icons/md";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import { useAuth } from "../AuthContext";
 
 const baseInput =
   "w-full py-2.5 pr-10 text-sm text-sky-700 placeholder:text-sky-700/60 rounded-xl border border-gray-300 focus:border-slate-800 text-right focus:outline-none";
@@ -52,8 +53,10 @@ const PasswordField = ({ placeholder, ...props }) => {
     </TextField>
   );
 };
+
 const CreatCard = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
@@ -68,12 +71,19 @@ const CreatCard = () => {
       return;
     }
 
-    const data = new FormData(e.currentTarget);
-    console.log(Object.fromEntries(data));
+    const data = Object.fromEntries(new FormData(e.currentTarget));
 
-    // ابعت data للـ API هنا
-    navigate("/next-page"); // غيّر المسار
+    // ابعت data للـ API هنا (FormData لو هترفع الصورة)
+
+    // مؤقت: نسجّل دخوله على طول بعد التسجيل
+    login({
+      name: data.fullName,
+      role: "طالب جامعي",
+      image: URL.createObjectURL(userImage), // رابط مؤقت للصورة اللي اختارها
+    });
+    navigate("/");
   };
+
   return (
     <div className="w-full flex items-center justify-center md:p-8">
       <Form

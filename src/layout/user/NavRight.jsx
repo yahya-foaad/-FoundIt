@@ -1,5 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
-import AuraCard from "./AuraCard";
+import { NavLink } from "react-router-dom";
 
 const links = [
   { to: "/", label: "الرئيسية", end: true },
@@ -16,12 +15,6 @@ const linkCls = ({ isActive }) =>
 const NavRight = () => {
   return (
     <div className="flex items-center gap-6">
-      <Link to="/" className="flex items-center gap-2">
-        <div className="flex flex-col items-end leading-tight">
-          <AuraCard />
-        </div>
-      </Link>
-
       <div className="hidden items-center gap-2 md:flex">
         {links.map((l) => (
           <NavLink key={l.to} to={l.to} end={l.end} className={linkCls}>
