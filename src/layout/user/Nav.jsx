@@ -208,9 +208,16 @@ const Nav = () => {
                   <span className="text-xs text-theme-muted">{user.role}</span>
                 </div>
                 <img
-                  src={user.image}
-                  alt={user.name}
-                  className="size-11 rounded-full object-cover"
+                  src={user?.image || "/default-avatar.png"}
+                  alt={user?.name}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src =
+                      "https://ui-avatars.com/api/?name=" +
+                      encodeURIComponent(user?.name || "User") +
+                      "&background=0369a1&color=fff";
+                  }}
+                  className="w-9 h-9 rounded-full object-cover"
                 />
               </button>
 

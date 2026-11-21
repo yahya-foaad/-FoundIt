@@ -8,10 +8,35 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useAuth } from "../AuthContext";
 
+const API_URL =
+  "https://login-mock-d799cf.mock.minarady94-24614.postman.dev/register";
+
+const resizeImage = (file, size = 200) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = reject;
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = reject;
+      img.onload = () => {
+        const scale = Math.min(size / img.width, size / img.height, 1);
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        canvas
+          .getContext("2d")
+          .drawImage(img, 0, 0, canvas.width, canvas.height);
+        resolve(canvas.toDataURL("image/jpeg", 0.8));
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+
 const baseInput =
-  "w-full py-2.5 pr-10 text-sm text-sky-700 placeholder:text-sky-700/60 rounded-xl border border-gray-300 focus:border-slate-800 text-right focus:outline-none";
+  "w-full py-2.5 pr-10 text-sm text-base-content placeholder:text-base-content/50 rounded-xl border border-base-300 bg-base-100 focus:border-primary text-right focus:outline-none";
 const iconCls =
-  "absolute right-3.5 top-1/2 -translate-y-1/2 text-sky-700 text-lg pointer-events-none z-10";
+  "absolute right-3.5 top-1/2 -translate-y-1/2 text-primary text-lg pointer-events-none z-10";
 
 /* حقل عادي بأيقونة */
 const IconField = ({ icon: Icon, placeholder, ...props }) => (
@@ -24,7 +49,7 @@ const IconField = ({ icon: Icon, placeholder, ...props }) => (
       <Icon className={iconCls} />
       <Input placeholder={placeholder} className={`${baseInput} pl-4`} />
     </div>
-    <FieldError className="text-xs text-red-600 text-right" />
+    <FieldError className="text-xs text-error text-right" />
   </TextField>
 );
 
@@ -45,16 +70,18 @@ const PasswordField = ({ placeholder, ...props }) => {
           type="button"
           aria-label={show ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
           onClick={() => setShow((s) => !s)}
-          className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sky-700 text-lg z-10">
+          className="absolute left-3.5 top-1/2 -translate-y-1/2 text-primary text-lg z-10">
           {show ? <FiEyeOff /> : <FiEye />}
         </button>
       </div>
-      <FieldError className="text-xs text-red-600 text-right" />
+      <FieldError className="text-xs text-error text-right" />
     </TextField>
   );
 };
 
 const CreatCard = () => {
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -63,25 +90,59 @@ const CreatCard = () => {
   const [userImage, setUserImage] = useState(null);
   const [imageError, setImageError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError("");
 
     if (!userImage) {
       setImageError("يرجى اختيار صورة شخصية");
       return;
     }
 
-    const data = Object.fromEntries(new FormData(e.currentTarget));
+    const form = new FormData(e.currentTarget);
+    const fullName = form.get("fullName");
+    const email = form.get("email");
 
-    // ابعت data للـ API هنا (FormData لو هترفع الصورة)
+    setLoading(true);
+    try {
+      const imageData = await resizeImage(userImage);
 
-    // مؤقت: نسجّل دخوله على طول بعد التسجيل
-    login({
-      name: data.fullName,
-      role: "طالب جامعي",
-      image: URL.createObjectURL(userImage), // رابط مؤقت للصورة اللي اختارها
-    });
-    navigate("/");
+      const payload = {
+        name: fullName,
+        email: email,
+        phone: phone,
+        password: password,
+        age: 21,
+        role: "طالب جامعي",
+        image: imageData,
+      };
+
+      // من غير headers عشان منرجعش لمشكلة الـ CORS
+      const res = await fetch(API_URL, {
+        method: "POST",
+        body: JSON.stringify(payload),
+      });
+
+      const result = await res.json();
+      console.log("status:", res.status, "response:", result);
+
+      if (!res.ok) {
+        setError(result.message || "تعذّر إنشاء الحساب، حاول مرة تانية");
+        return;
+      }
+
+      login({
+        name: fullName,
+        role: "طالب جامعي",
+        image: imageData,
+      });
+      navigate("/");
+    } catch (err) {
+      console.error("error:", err);
+      setError("حصل خطأ في الاتصال بالسيرفر: " + err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -89,13 +150,13 @@ const CreatCard = () => {
       <Form
         onSubmit={handleSubmit}
         dir="rtl"
-        className="flex w-full max-w-xl flex-col gap-4 rounded-2xl bg-white p-5 shadow-none border-0 md:p-8 md:shadow-2xl md:border md:border-gray-100">
+        className="flex w-full max-w-xl flex-col gap-4 rounded-2xl bg-base-100 text-base-content p-5 shadow-none border-0 md:p-8 md:shadow-2xl md:border md:border-base-300">
         {/* Title */}
         <div className="flex flex-col gap-1.5 text-center mb-2">
-          <p className="text-2xl sm:text-3xl font-extrabold text-sky-700">
+          <p className="text-2xl sm:text-3xl font-extrabold text-primary">
             إنشاء حساب جديد
           </p>
-          <p className="text-sm text-sky-700 font-medium">
+          <p className="text-sm text-primary font-medium">
             أهلاً بك! يرجى إدخال بياناتك للانضمام إلينا
           </p>
         </div>
@@ -137,8 +198,8 @@ const CreatCard = () => {
         {/* حقل الصورة الشخصية */}
         <div className="flex flex-col gap-1">
           <div
-            className={`relative flex items-center justify-between w-full py-2 px-4 rounded-xl border bg-white ${
-              imageError ? "border-red-500" : "border-gray-300"
+            className={`relative flex items-center justify-between w-full py-2 px-4 rounded-xl border bg-base-100 ${
+              imageError ? "border-error" : "border-base-300"
             }`}>
             <input
               type="file"
@@ -154,22 +215,22 @@ const CreatCard = () => {
             />
 
             <div className="flex items-center gap-3 min-w-0">
-              <HiOutlinePhotograph className="text-xl text-sky-700 shrink-0" />
+              <HiOutlinePhotograph className="text-xl text-primary shrink-0" />
               <span
                 className={`text-sm truncate ${
-                  userImage ? "text-sky-700" : "text-sky-700/60"
+                  userImage ? "text-base-content" : "text-base-content/50"
                 }`}>
                 {userImage ? userImage.name : "الصورة الشخصية"}
               </span>
             </div>
 
-            <span className="px-3 py-1 text-xs font-bold bg-sky-700 text-white rounded-lg pointer-events-none">
+            <span className="px-3 py-1 text-xs font-bold bg-primary text-primary-content rounded-lg pointer-events-none">
               اختر ملف
             </span>
           </div>
 
           {imageError && (
-            <p className="text-xs text-red-600 text-right">{imageError}</p>
+            <p className="text-xs text-error text-right">{imageError}</p>
           )}
         </div>
 
@@ -195,18 +256,22 @@ const CreatCard = () => {
           }
         />
 
+        {error && (
+          <p className="text-sm text-error text-center w-full">{error}</p>
+        )}
+
         <Button
           type="submit"
+          isDisabled={loading}
           onPress={() => {
             if (!userImage) setImageError("يرجى اختيار صورة شخصية");
           }}
-          className="w-full py-3 mt-2 text-base font-bold bg-sky-700 text-white rounded-xl hover:bg-[#071324] transition-colors">
-          إنشاء حساب
+          className="w-full py-3 mt-2 text-base font-bold rounded-xl bg-primary text-primary-content hover:opacity-90 transition-opacity">
+          {loading ? "جاري إنشاء الحساب..." : "إنشاء حساب"}
         </Button>
-
         <Button
           type="button"
-          className="w-full px-6 py-2 text-base text-sky-700 bg-white hover:bg-gray-50 transition-colors"
+          className="w-full px-6 py-2 text-base text-primary bg-transparent hover:bg-base-200 transition-colors"
           onPress={() => navigate("/login")}>
           لديك حساب؟ تسجيل الدخول
         </Button>
