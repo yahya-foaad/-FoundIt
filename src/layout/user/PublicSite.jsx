@@ -6,7 +6,7 @@ import Footer from "./Footer";
 import HomePage from "../../pages/home/HomePage";
 import LoginPage from "../../pages/auth/LoginPage";
 import SignupPage from "../../pages/auth/SignupPage";
-import Forgetpassword from "../../pages/auth/Forgetpassword";
+
 import NotFoundPage from "../../pages/static/NotFoundPage";
 import ItemsPage from "../../pages/items/ItemsPage";
 import ItemDetailsPage from "../../pages/items/ItemDetailsPage";
@@ -23,7 +23,6 @@ export default function PublicSite() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/forgetpassword" element={<Forgetpassword />} />
 
           <Route path="/items">
             <Route index element={<ItemsPage />} />
@@ -35,7 +34,7 @@ export default function PublicSite() {
             <Route path="edit/:id" element={<EditFormPage />} />
           </Route>
 
-<Route path="/profile/*" element={<ProfilePage />} />
+          <Route path="/profile/*" element={<ProfilePage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
