@@ -13,10 +13,12 @@ import ItemDetailsPage from "../../pages/items/ItemDetailsPage";
 import ReportFormPage from "../../pages/report/ReportFormPage";
 import EditFormPage from "../../pages/profile/EditFormPage";
 import ProfilePage from "../../pages/profile/ProfilePage";
+import ItemsContext from "../../context/ItemContext";
 
 export default function PublicSite() {
   return (
     <>
+    <ItemsContext>
       <Header />
       <main>
         <Routes>
@@ -39,6 +41,7 @@ export default function PublicSite() {
         </Routes>
       </main>
       <Footer />
+      </ItemsContext>
     </>
   );
 }

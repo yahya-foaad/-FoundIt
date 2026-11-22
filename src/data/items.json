@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": " محفظة بنية",
+    "image": "https://img.daisyui.com/images/profile/demo/2@94.webp",
+    "location": "المكتبة المركزية",
+    "place": "الطابق الثاني",
+    "date": "2026-10-12",
+    "status": "approved"
+  },
+  {
+    "id": 2,
+    "name": "هاتف آيفون 14 أزرق",
+    "image": "https://img.daisyui.com/images/profile/demo/3@94.webp",
+    "location": "كافتيريا كلية الهندسة",
+    "place": "طاولة رقم 4",
+    "date": "2026-10-10",
+    "status": "approved"
+  },
+  {
+    "id": 3,
+    "name": "حقيبة ظهر سوداء",
+    "image": "https://img.daisyui.com/images/profile/demo/4@94.webp",
+    "location": "قاعة المحاضرات B2",
+    "place": "المقعد الأخير",
+    "date": "2026-10-09",
+    "status": "rejected"
+  },
+  {
+    "id": 4,
+    "name": "ساعة يد فضية",
+    "image": "https://img.daisyui.com/images/profile/demo/5@94.webp",
+    "location": "صالة الألعاب الرياضية",
+    "place": "غرفة تغيير الملابس",
+    "date": "2026-10-07",
+    "status": "review"
+  }
+]

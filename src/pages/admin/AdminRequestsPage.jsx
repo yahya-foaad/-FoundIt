@@ -83,7 +83,7 @@ function Actions({ report, className = "" }) {
 
 export default function ReportsTable() {
   return (
-    <div dir="rtl">
+    <div dir="rtl" data-theme="light">
       {/* Mobile: cards */}
       <div className="grid gap-4 md:hidden">
         {reports.map((report) => (
