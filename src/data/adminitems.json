@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "محفظة جلدية بنية",
+    "finder": "سارة أحمد",
+    "place": "المكتبة المركزية",
+    "spot": "الطابق الثاني",
+    "date": "12 أكتوبر 2026",
+    "status": "pending",
+    "img": "https://img.daisyui.com/images/profile/demo/2@94.webp"
+  },
+  {
+    "id": 2,
+    "name": "هاتف آيفون 14 أزرق",
+    "finder": "محمد علي",
+    "place": "كافتيريا كلية الهندسة",
+    "spot": "طاولة رقم 4",
+    "date": "10 أكتوبر 2026",
+    "status": "approved",
+    "img": "https://img.daisyui.com/images/profile/demo/3@94.webp"
+  },
+  {
+    "id": 3,
+    "name": "حقيبة ظهر سوداء",
+    "finder": "نور حسن",
+    "place": "قاعة المحاضرات B2",
+    "spot": "المقعد الأخير",
+    "date": "09 أكتوبر 2026",
+    "status": "rejected",
+    "img": "https://img.daisyui.com/images/profile/demo/4@94.webp"
+  },
+  {
+    "id": 4,
+    "name": "ساعة يد فضية",
+    "finder": "أحمد محمود",
+    "place": "صالة الألعاب الرياضية",
+    "spot": "غرفة تغيير الملابس",
+    "date": "07 أكتوبر 2026",
+    "status": "pending",
+    "img": "https://img.daisyui.com/images/profile/demo/5@94.webp"
+  }
+]

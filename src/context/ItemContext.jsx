@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import initialItems from "../data/items.json";
+import initialItems from "../data/useritems.json";
 
 const ItemContext = createContext();
 

@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-
+import AdminReportsContext from "../../context/adminReportsContext.jsx";
 import AdminHeader from "./AdminHeader";
 import AdminFooter from "./AdminFooter";
 
@@ -11,6 +11,7 @@ import AdminUsersPage from "../../pages/admin/AdminUsersPage";
 export default function AdminSite() {
   return (
     <>
+    <AdminReportsContext>
       <AdminHeader />
       <main>
         <Routes>
@@ -21,6 +22,7 @@ export default function AdminSite() {
         </Routes>
       </main>
       <AdminFooter />
+      </AdminReportsContext>
     </>
   );
 }

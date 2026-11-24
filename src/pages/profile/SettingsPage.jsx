@@ -1,9 +1,8 @@
-import { useAuth } from "../auth/AuthContext"; // ✏️ EDIT 1: replaces the unused useState import
+import { useAuth } from "../auth/AuthContext";
 
 const SettingsPage = () => {
-  const { user, login } = useAuth(); // ✏️ EDIT 2: ADD, reads the user (login is reused to save changes)
+  const { user, login } = useAuth();
 
-  // ✏️ EDIT 3: ADD this whole function
   const handleSave = (e) => {
     e.preventDefault();
     const data = Object.fromEntries(new FormData(e.currentTarget));
@@ -17,9 +16,66 @@ const SettingsPage = () => {
     });
   };
 
+  /* 🔒 BACKEND VERSION: امسح handleSave اللي فوق وفك الـ comment عن ده
+const handleSave = async (e) => {
+  e.preventDefault();
+  const form = e.currentTarget;
+  const data = Object.fromEntries(new FormData(form));
+
+  // validation للباسورد (بس لو كتب حاجة)
+  if (data.newPassword || data.confirmPassword) {
+    if (data.newPassword.length < 8) {
+      alert("كلمة المرور يجب ألا تقل عن 8 أحرف");
+      return;
+    }
+    if (data.newPassword !== data.confirmPassword) {
+      alert("كلمتا المرور غير متطابقتين");
+      return;
+    }
+  }
+
+  // validation للصورة (2MB)
+  const avatar = data.avatar;
+  if (avatar && avatar.size > 2 * 1024 * 1024) {
+    alert("حجم الصورة أكبر من 2 ميجابايت");
+    return;
+  }
+
+  // الملفات لازم تتبعت FormData مش JSON
+  const body = new FormData();
+  body.append("name", data.name);
+  body.append("email", data.email);
+  body.append("phone", data.phone);
+  body.append("faculty", data.faculty);
+  if (data.newPassword) body.append("password", data.newPassword);
+  if (avatar && avatar.size > 0) body.append("avatar", avatar);
+
+  try {
+    const res = await fetch("/api/users/me", {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        // مفيش Content-Type هنا، المتصفح بيحطه لوحده مع FormData
+      },
+      body,
+    });
+
+    if (!res.ok) throw new Error("Update failed");
+
+    const updatedUser = await res.json();
+    login(updatedUser);
+    form.reset();
+    alert("تم الحفظ بنجاح");
+  } catch (err) {
+    console.error(err);
+    alert("حدث خطأ، حاول مرة أخرى");
+  }
+};
+*/
   return (
-    <form // ✏️ EDIT 4: was <div>, now a form so Save works
-      onSubmit={handleSave}
+    <form
+      //key={user?.id}
+      // onSubmit={handleSave}
       dir="rtl"
       className="card glass w-full max-w-2xl mx-auto p-6 text-right"
     >
@@ -28,11 +84,12 @@ const SettingsPage = () => {
         <fieldset className="fieldset">
           <legend className="fieldset-legend text-lg opacity-90">الاسم</legend>
           <input
-            name="name" // ✏️ EDIT 5: ADD name
-            defaultValue={user?.name} // ✏️ EDIT 5: ADD defaultValue
+            name="name"
+            defaultValue={user?.name}
             type="text"
-            className="input w-full"
-            placeholder="سارة أحمد"
+            className="input w-full text-base-content"
+            // placeholder={user?.name }
+            placeholder="سارة احمد"
           />
         </fieldset>
 
@@ -42,10 +99,11 @@ const SettingsPage = () => {
             البريد الإلكتروني
           </legend>
           <input
-            name="email" // ✏️ EDIT 6
-            defaultValue={user?.email} // ✏️ EDIT 6
+            name="email"
+            defaultValue={user?.email}
             type="email"
-            className="input w-full"
+            className="input w-full text-base-content"
+            //placeholder ={user?.email}
             placeholder="sara.ahmed@campus.edu"
           />
         </fieldset>
@@ -56,10 +114,11 @@ const SettingsPage = () => {
             رقم الهاتف
           </legend>
           <input
-            name="phone" // ✏️ EDIT 7
-            defaultValue={user?.phone} // ✏️ EDIT 7
+            name="phone"
+            defaultValue={user?.phone}
             type="tel"
-            className="input w-full"
+            className="input w-full text-base-content"
+            //placeholder ={user?.phone}
             placeholder="0123456789"
           />
         </fieldset>
@@ -68,10 +127,11 @@ const SettingsPage = () => {
         <fieldset className="fieldset">
           <legend className="fieldset-legend text-lg opacity-90">الكلية</legend>
           <input
-            name="faculty" // ✏️ EDIT 8
-            defaultValue={user?.faculty} // ✏️ EDIT 8
+            name="faculty"
+            defaultValue={user?.faculty}
             type="text"
-            className="input w-full"
+            className="input w-full text-base-content"
+            //placeholder ={user?.faculty}
             placeholder="كلية الهندسة"
           />
         </fieldset>
@@ -82,8 +142,10 @@ const SettingsPage = () => {
             كلمة المرور
           </legend>
           <input
+            name="newPassword"
             type="password"
-            className="input w-full"
+            autoComplete="new-password"
+            className="input w-full text-base-content"
             placeholder="••••••••"
           />
         </fieldset>
@@ -94,8 +156,10 @@ const SettingsPage = () => {
             تأكيد كلمة المرور
           </legend>
           <input
+            name="confirmPassword"
             type="password"
-            className="input w-full"
+            autoComplete="new-password"
+            className="input w-full text-base-content"
             placeholder="••••••••"
           />
         </fieldset>
@@ -106,25 +170,23 @@ const SettingsPage = () => {
             <legend className="fieldset-legend text-lg opacity-70">
               اختر ملفاً (صورة شخصية)
             </legend>
-            <input type="file" className="file-input w-full" />
+            <input
+              name="avatar"
+              type="file"
+              accept="image/*"
+              className="file-input w-full"
+            />
             <label className="label">الحد الأقصى للحجم 2 ميجابايت</label>
           </fieldset>
         </div>
       </div>
 
       {/* Footer Actions */}
-      <div className="flex justify-between items-center mt-6">
-        <button type="button" className="btn btn-ghost text-primary btn-sm">
-          {" "}
-          {/* ✏️ EDIT 9: ADD type="button" so it doesn't submit */}
-          إعادة تعيين كلمة المرور
-        </button>
-        <button type="submit" className="btn btn-neutral px-8">
-          {" "}
-          {/* ✏️ EDIT 10: ADD type="submit" */}
-          حفظ
-        </button>
-      </div>
+      <div className="flex justify-center items-center mt-6">
+  <button type="submit" className="btn btn-neutral px-8">
+    حفظ
+  </button>
+</div>
     </form>
   );
 };

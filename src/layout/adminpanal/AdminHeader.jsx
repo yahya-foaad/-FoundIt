@@ -4,7 +4,7 @@ import { Button } from "@heroui/react";
 
 const links = [
   { to: "/admin", label: "لوحة التحكم", end: true },
-  { to: "/admin/requests", label: "الطلبات" },
+  { to: "/admin/requests", label: "البلاغات" },
   { to: "/admin/users", label: "المستخدمون" },
 ];
 
