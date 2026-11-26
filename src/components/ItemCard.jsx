@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import { FiCalendar } from "react-icons/fi";
+import { formatDate } from "./formatDate";
 
 export default function ItemCard({ item }) {
   return (
     <Link
       to={`/items/${item.id}`}
-      className="flex items-center gap-3 rounded-2xl bg-white p-3 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+      className="flex items-center gap-3 rounded-2xl bg-base-100 p-3 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
     >
       <img
         src={item.image}
@@ -18,13 +19,13 @@ export default function ItemCard({ item }) {
           معثور عليه
         </span>
 
-        <h3 className="w-full truncate text-base font-extrabold text-[#0b1f4b]">
-          {item.name}
+        <h3 className="w-full truncate text-base font-extrabold text-base-content">
+          {item.name?.trim()}
         </h3>
 
-        <p className="flex items-center gap-1.5 text-xs font-semibold text-slate-600">
-          <FiCalendar className="text-blue-600" />
-          {item.date}
+        <p className="flex items-center gap-1.5 text-xs font-semibold text-base-content/70">
+          <FiCalendar className="text-primary" />
+          {formatDate(item.date)}
         </p>
       </div>
     </Link>
