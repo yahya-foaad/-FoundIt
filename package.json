@@ -11,6 +11,8 @@
     "format": "prettier --write src"
   },
   "dependencies": {
+    "@fontsource/cairo": "^5.3.0",
+    "@fontsource/story-script": "^5.3.0",
     "@heroicons/react": "^2.2.0",
     "@heroui/react": "^3.2.7",
     "@heroui/styles": "^3.2.7",
