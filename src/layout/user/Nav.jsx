@@ -24,8 +24,8 @@ const profileLinks = [
 ];
 
 const linkCls = ({ isActive }) =>
-  `px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-colors ${
-    isActive ? "bg-[#0b1f3a] text-white" : "text-slate-800 hover:bg-slate-100"
+  `px-5 py-2.5 rounded-xl text-sm font-bold whitespace-nowrap transition-colors text-base-content ${
+    isActive ? "bg-base-content/15" : "hover:bg-base-content/10"
   }`;
 
 const Nav = () => {
