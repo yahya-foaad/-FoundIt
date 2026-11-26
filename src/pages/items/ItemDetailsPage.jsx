@@ -1,11 +1,13 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useItems } from "../../context/ItemContext";
+import { formatDate } from "../../components/formatDate";
 import {
   FiHome,
   FiBox,
   FiMapPin,
   FiCalendar,
   FiCheckCircle,
-  FiUser,
   FiFlag,
   FiCheck,
   FiChevronLeft,
@@ -14,26 +16,49 @@ import {
 } from "react-icons/fi";
 import { FaHandshake } from "react-icons/fa";
 
-const thumbs = [
-  "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=300",
-  "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=300",
-  "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=300",
-  "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300",
-];
-
-const details = [
-  { label: "التصنيف", value: "إلكترونيات", icon: <FiBox /> },
-  {
-    label: "مكان العثور",
-    value: "المكتبة المركزية – الدور الثاني",
-    icon: <FiMapPin />,
-  },
-  { label: "تاريخ العثور", value: "2 نوفمبر 2026", icon: <FiCalendar /> },
-  { label: "الحالة", value: "جيدة", icon: <FiCheckCircle /> },
-  { label: "المُبلغ", value: "أحد موظفي الجامعة", icon: <FiUser /> },
-];
-
 export default function ItemDetailsPage() {
+  const { id } = useParams();
+  const { items } = useItems();
+  const [claimed, setClaimed] = useState(false);
+  const [reported, setReported] = useState(false);
+  const [imgIndex, setImgIndex] = useState(0);
+
+  const item = items.find(
+    (i) => String(i.id) === String(id) && i.status === "approved",
+  );
+
+  if (!item) {
+    return (
+      <div
+        dir="rtl"
+        className="min-h-screen bg-base-200 px-4 py-16 text-center"
+      >
+        <h1 className="text-2xl font-extrabold text-base-content">
+          الغرض ده مش موجود
+        </h1>
+        <p className="mt-2 text-base-content/70">
+          يمكن اتحذف أو لسه مش متوافق عليه.
+        </p>
+        <Link to="/items" className="mt-5 inline-block font-bold text-primary">
+          رجوع لصفحة الأغراض
+        </Link>
+      </div>
+    );
+  }
+
+  const images = item.images?.length ? item.images : [item.image];
+  const name = item.name?.trim();
+  const details = [
+    { label: "مكان العثور", value: item.location, icon: <FiMapPin /> },
+    { label: "المكان بالتحديد", value: item.place, icon: <FiBox /> },
+    {
+      label: "تاريخ العثور",
+      value: formatDate(item.date),
+      icon: <FiCalendar />,
+    },
+    { label: "الحالة", value: "معثور عليه", icon: <FiCheckCircle /> },
+  ].filter((d) => d.value);
+
   return (
     <div dir="rtl" className="min-h-screen bg-base-200 px-4 py-6">
       <div className="mx-auto max-w-6xl">
@@ -59,26 +84,37 @@ export default function ItemDetailsPage() {
           <div>
             <div className="relative overflow-hidden rounded-2xl">
               <img
-                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=900"
-                alt="سماعات لاسلكية"
+                src={images[imgIndex]}
+                alt={name}
                 className="h-72 w-full object-cover sm:h-96"
               />
-              <button className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-base-100/90 text-base-content shadow">
-                <FiChevronLeft />
-              </button>
-              <button className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-base-100/90 text-base-content shadow">
-                <FiChevronRight />
-              </button>
+              <>
+                <button
+                  onClick={() => setImgIndex((imgIndex + 1) % images.length)}
+                  className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-base-100/90 text-base-content shadow"
+                >
+                  <FiChevronLeft />
+                </button>
+                <button
+                  onClick={() =>
+                    setImgIndex((imgIndex - 1 + images.length) % images.length)
+                  }
+                  className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-base-100/90 text-base-content shadow"
+                >
+                  <FiChevronRight />
+                </button>
+              </>
             </div>
 
             <div className="mt-3 grid grid-cols-4 gap-3">
-              {thumbs.map((src, i) => (
+              {images.map((src, i) => (
                 <img
                   key={i}
                   src={src}
                   alt=""
-                  className={`h-16 w-full rounded-xl border-2 object-cover ${
-                    i === 3 ? "border-primary" : "border-transparent"
+                  onClick={() => setImgIndex(i)}
+                  className={`h-16 w-full cursor-pointer rounded-xl border-2 object-cover ${
+                    i === imgIndex ? "border-primary" : "border-transparent"
                   }`}
                 />
               ))}
@@ -92,41 +128,47 @@ export default function ItemDetailsPage() {
             </span>
 
             <h2 className="mt-3 text-3xl font-extrabold text-primary">
-              سماعات لاسلكية
+              {name}
             </h2>
-            <p className="mt-2 leading-8 text-slate-600">
-              سماعات لاسلكية سوداء بحالة جيدة، تم العثور عليها في المكتبة
-              المركزية بالدور الثاني.
-            </p>
 
-            <ul className="mt-5 divide-y divide-slate-200 rounded-2xl bg-slate-50 px-4">
+            <ul className="mt-5 divide-y divide-base-300 rounded-2xl bg-base-200 px-4">
               {details.map((d) => (
                 <li
                   key={d.label}
-                  className="flex items-center justify-between gap-3 py-3 text-sm">
-                  <span className="flex items-center gap-2 font-bold text-[#0b1f4b]">
-                    <span className="text-lg text-blue-600">{d.icon}</span>
+                  className="flex items-center justify-between gap-3 py-3 text-sm"
+                >
+                  <span className="flex items-center gap-2 font-bold text-base-content">
+                    <span className="text-lg text-primary">{d.icon}</span>
                     {d.label}
                   </span>
-                  <span className="text-slate-600">{d.value}</span>
+                  <span className="text-base-content/70">{d.value}</span>
                 </li>
               ))}
             </ul>
 
             <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-              <button className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 font-bold text-white shadow hover:bg-blue-700">
+              <button
+                onClick={() => setClaimed(true)}
+                disabled={claimed}
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-primary py-3 font-bold text-white shadow hover:opacity-90"
+              >
                 <FaHandshake className="text-xl" />
-                المطالبة بالغرض
+                {claimed ? "طلبك اتسجل" : "المطالبة بالغرض"}
               </button>
-              <button className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white py-3 font-bold text-[#0b1f4b] hover:bg-slate-50">
+              <button
+                onClick={() => setReported(true)}
+                disabled={reported}
+                className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-base-300 bg-base-100 py-3 font-bold text-base-content hover:bg-base-200"
+              >
                 <FiFlag />
-                الإبلاغ عن مشكلة
+                {reported ? "البلاغ اتسجل" : "الإبلاغ عن مشكلة"}
               </button>
             </div>
 
             <Link
               to="/items"
-              className="mt-4 flex items-center gap-2 text-sm font-bold text-blue-600 hover:underline">
+              className="mt-4 flex items-center gap-2 text-sm font-bold text-primary hover:underline"
+            >
               <FiArrowRight />
               رجوع لصفحة الأغراض
             </Link>

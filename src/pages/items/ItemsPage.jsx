@@ -1,59 +1,30 @@
 import { FiSearch } from "react-icons/fi";
 import { MdSort } from "react-icons/md";
+import { useState } from "react";
 import ItemCard from "../../components/ItemCard";
-
-const items = [
-  {
-    id: 1,
-    name: "بطاقة طالب",
-    date: "1 نوفمبر 2026",
-    image: "https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=400",
-  },
-  {
-    id: 2,
-    name: "مفاتيح مع سلسلة",
-    date: "26 أكتوبر 2026",
-    image: "https://images.unsplash.com/photo-1582139329536-e7284fece509?w=400",
-  },
-  {
-    id: 3,
-    name: "محفظة جلدية",
-    date: "31 أكتوبر 2026",
-    image: "https://images.unsplash.com/photo-1627123424574-724758594e93?w=400",
-  },
-  {
-    id: 4,
-    name: "سماعات AirPods",
-    date: "2 نوفمبر 2026",
-    image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=400",
-  },
-  {
-    id: 5,
-    name: "حقيبة ظهر",
-    date: "28 أكتوبر 2026",
-    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400",
-  },
-  {
-    id: 6,
-    name: "زجاجة مياه",
-    date: "25 أكتوبر 2026",
-    image: "https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=400",
-  },
-  {
-    id: 7,
-    name: "نظارة طبية",
-    date: "25 أكتوبر 2026",
-    image: "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=400",
-  },
-  {
-    id: 8,
-    name: "سماعات لاسلكية",
-    date: "30 أكتوبر 2026",
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400",
-  },
-];
+import { useItems } from "../../context/ItemContext";
 
 export default function ItemsPage() {
+  const { items: allItems } = useItems();
+  const [query, setQuery] = useState("");
+  const [newestFirst, setNewestFirst] = useState(true);
+
+  const q = query.trim().toLowerCase();
+  const items = allItems
+    .filter((i) => i.status === "approved")
+    .filter(
+      (i) =>
+        !q ||
+        [i.name, i.location, i.place].some((f) =>
+          (f || "").toLowerCase().includes(q),
+        ),
+    )
+    .sort((a, b) =>
+      newestFirst
+        ? new Date(b.date) - new Date(a.date)
+        : new Date(a.date) - new Date(b.date),
+    );
+
   return (
     <div dir="rtl" className="min-h-screen bg-base-200 px-4 py-6">
       <div className="mx-auto max-w-6xl space-y-5">
@@ -86,15 +57,19 @@ export default function ItemsPage() {
           <FiSearch className="absolute right-5 top-1/2 -translate-y-1/2 text-xl text-base-content/70" />
           <input
             type="text"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
             placeholder="دوّر على غرض (مثلًا: شنطة، نضارة، موبايل...)"
             className="w-full rounded-full border border-base-300 bg-base-100 py-4 pr-14 pl-4 text-sm text-base-content shadow-sm outline-none placeholder:text-base-content/50 focus:border-primary  "
           />
         </div>
 
         {/* الترتيب */}
-        <button className="flex items-center gap-2 rounded-full border border-base-300 bg-base-100 px-5 py-2 text-sm font-bold text-base-content shadow-sm">
+        <button
+          onClick={() => setNewestFirst((v) => !v)}
+          className="flex items-center gap-2 rounded-full border border-base-300 bg-base-100 px-5 py-2 text-sm font-bold text-base-content shadow-sm">
           <MdSort className="text-lg" />
-          ترتيب: الأحدث
+          ترتيب: {newestFirst ? "الأحدث" : "الأقدم"}
         </button>
 
         {/* الكروت */}
@@ -103,6 +78,11 @@ export default function ItemsPage() {
             <ItemCard key={item.id} item={item} />
           ))}
         </div>
+        {items.length === 0 && (
+          <p className="py-10 text-center text-base-content/70">
+            مفيش أغراض مطابقة للبحث.
+          </p>
+        )}
       </div>
     </div>
   );
