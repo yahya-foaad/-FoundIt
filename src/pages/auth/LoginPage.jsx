@@ -1,6 +1,7 @@
 import LoginCard from "./Cards/LoginCard";
-import loginBgImg from "../../media/1793031884399.jpg"; // عدّل المسار النسبي لو الملف جوه فولدرات أكتر
+import loginBgImg from "../../media/1793031884399.jpg";
 import logoImg from "../../media/1793810251498.jpg";
+import logoDarkImg from "../../media/Gemini_Generated_Image_azr16mazr16mazr1.jpg";
 
 const LoginPage = () => {
   return (
@@ -13,12 +14,22 @@ const LoginPage = () => {
           alt="Login illustration"
         />
       </div>
+
       <div className="w-full md:w-1/2 flex flex-col items-center justify-center gap-4 px-4 py-8">
+        {/* لوجو الوضع الفاتح */}
         <img
           src={logoImg}
           alt="FoundIt"
-          className="md:hidden h-32 sm:h-40 w-auto mix-blend-multiply"
+          className="md:hidden h-32 sm:h-40 w-auto mix-blend-multiply in-data-[theme=night]:hidden"
         />
+
+        {/* لوجو الدارك مود */}
+        <img
+          src={logoDarkImg}
+          alt="FoundIt"
+          className="hidden h-32 sm:h-40 w-auto in-data-[theme=night]:block md:in-data-[theme=night]:hidden"
+        />
+
         <LoginCard />
       </div>
     </div>

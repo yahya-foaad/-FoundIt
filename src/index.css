@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @plugin "daisyui";
 @import "@heroui/styles";
+@theme {
+  --font-logo: "Poppins", "Cairo", sans-serif;
+  --font-arabic: "Cairo", sans-serif;
+}
 @plugin "daisyui" {
   themes:
     light --default,

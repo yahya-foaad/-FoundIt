@@ -87,8 +87,7 @@ export default function ReportFormPage() {
   return (
     <div
       className="min-h-screen bg-gray-50 py-10 px-4 sm:px-6 lg:px-8"
-      dir="rtl"
-    >
+      dir="rtl">
       <div className="max-w-2xl mx-auto bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
         <div className="flex items-center gap-3 mb-8 border-b pb-4">
           <span className="text-3xl">🔍</span>
@@ -123,8 +122,7 @@ export default function ReportFormPage() {
               value={form.description}
               onChange={handleChange}
               placeholder="اكتب أي علامة مميزة (لون، خدش، مكان محدد جوه...)"
-              className={inputClass("description", "resize-none")}
-            ></textarea>
+              className={inputClass("description", "resize-none")}></textarea>
             <ErrorMsg name="description" text="لازم تكتب وصف الحاجة" />
           </div>
 
@@ -194,8 +192,7 @@ export default function ReportFormPage() {
                 {selectedImages.map((img, index) => (
                   <div
                     key={img.url}
-                    className="relative group rounded-xl overflow-hidden border border-gray-200 aspect-square"
-                  >
+                    className="relative group rounded-xl overflow-hidden border border-gray-200 aspect-square">
                     <img
                       src={img.url}
                       alt={`صورة ${index + 1}`}
@@ -205,8 +202,7 @@ export default function ReportFormPage() {
                       type="button"
                       onClick={() => removeImage(index)}
                       className="absolute top-2 left-2 w-7 h-7 flex items-center justify-center bg-red-500 text-white rounded-full text-sm shadow hover:bg-red-600"
-                      aria-label="حذف الصورة"
-                    >
+                      aria-label="حذف الصورة">
                       ✕
                     </button>
                   </div>
@@ -219,15 +215,13 @@ export default function ReportFormPage() {
           <div className="flex items-center gap-4 pt-4 border-t">
             <button
               type="submit"
-              className="px-6 py-3 bg-gray-900 text-white rounded-xl text-sm font-medium hover:bg-gray-800 transition-colors shadow-sm"
-            >
+              className="px-6 py-3 bg-gray-900 text-white rounded-xl text-sm font-medium hover:bg-gray-800 transition-colors shadow-sm">
               تأكيد ونشر البلاغ
             </button>
             <button
               type="button"
               onClick={handleCancel}
-              className="px-6 py-3 bg-gray-100 text-gray-600 rounded-xl text-sm font-medium hover:bg-gray-200 transition-colors"
-            >
+              className="px-6 py-3 bg-gray-100 text-gray-600 rounded-xl text-sm font-medium hover:bg-gray-200 transition-colors">
               إلغاء
             </button>
           </div>
